@@ -1,0 +1,544 @@
+/* styles.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f8fafc;
+    color: #1e293b;
+    overflow-x: hidden;
+}
+
+.app-container {
+    max-width: 414px;
+    margin: 0 auto;
+    background: white;
+    min-height: 100vh;
+    box-shadow: 0 0 40px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+/* Screen Classes */
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: white;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    overflow-y: auto;
+}
+
+.screen.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.screen.prev {
+    transform: translateX(-100%);
+    opacity: 0;
+}
+
+/* Header */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.header-nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+}
+
+.back-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.back-btn:hover {
+    background: rgba(255,255,255,0.3);
+}
+
+/* Content */
+.content {
+    padding: 20px;
+    padding-bottom: 100px;
+}
+
+/* Landing Page */
+.hero {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    margin: -20px -20px 30px -20px;
+}
+
+.hero h1 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 30px 0;
+}
+
+.feature-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.feature-card .icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.feature-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.feature-card p {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Wallet Balance */
+.balance-card {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.balance-amount {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.balance-label {
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+/* Action Buttons */
+.action-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.action-btn {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px 10px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+}
+
+.action-btn:hover {
+    border-color: #667eea;
+    transform: translateY(-2px);
+}
+
+.action-btn .icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.action-btn .label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #374151;
+}
+
+.form-input {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.form-select {
+    width: 100%;
+    padding: 15px;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 16px;
+    background: white;
+}
+
+/* Primary Button */
+.btn-primary {
+    width: 100%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+}
+
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Fee Display */
+.fee-breakdown {
+    background: #f1f5f9;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.fee-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.fee-row:last-child {
+    margin-bottom: 0;
+    font-weight: 600;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 8px;
+}
+
+/* Receipt */
+.receipt {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 20px 0;
+}
+
+.receipt-header {
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 20px;
+}
+
+.receipt-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.receipt-row:last-child {
+    border-bottom: none;
+    font-weight: 600;
+}
+
+/* Transaction History */
+.transaction-item {
+    display: flex;
+    align-items: center;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.transaction-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    font-size: 16px;
+}
+
+.transaction-details {
+    flex: 1;
+}
+
+.transaction-title {
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.transaction-subtitle {
+    font-size: 14px;
+    color: #64748b;
+}
+
+.transaction-amount {
+    font-weight: 600;
+    text-align: right;
+}
+
+/* Currency Cards */
+.currency-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.currency-card {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.currency-card:hover {
+    border-color: #667eea;
+}
+
+.currency-flag {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.currency-amount {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+/* QR Scanner */
+.qr-scanner {
+    background: #000;
+    border-radius: 16px;
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 20px 0;
+    position: relative;
+}
+
+.qr-overlay {
+    position: absolute;
+    inset: 20px;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    background: linear-gradient(45deg, transparent 48%, #667eea 48%, #667eea 52%, transparent 52%);
+}
+
+/* Success States */
+.success-icon {
+    width: 80px;
+    height: 80px;
+    background: #10b981;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    color: white;
+    font-size: 32px;
+}
+
+/* Bottom Navigation */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 414px;
+    background: white;
+    border-top: 1px solid #e2e8f0;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.nav-item {
+    text-align: center;
+    padding: 8px;
+    cursor: pointer;
+    color: #64748b;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.nav-item.active {
+    color: #667eea;
+}
+
+.nav-item .icon {
+    font-size: 20px;
+    margin-bottom: 4px;
+}
+
+.nav-item .label {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: white;
+    margin: 20px;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 350px;
+    width: 100%;
+}
+
+/* Camera */
+.camera-container {
+    background: #000;
+    border-radius: 16px;
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin: 20px 0;
+}
+
+/* AI Recommendations */
+.recommendation-card {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin: 15px 0;
+}
+
+.recommendation-card h3 {
+    margin-bottom: 10px;
+}
+
+/* Quick Amount Buttons */
+.quick-amount {
+    background: white;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.quick-amount:hover, .quick-amount.selected {
+    border-color: #667eea;
+    background: #f0f4ff;
+    color: #667eea;
+}
+
+/* Payment Method Sections */
+.payment-method-section {
+    display: none;
+}
+
+.payment-method-section.active {
+    display: block;
+}
+
+@media (max-width: 414px) {
+    .app-container {
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .bottom-nav {
+        width: 100%;
+    }
+}

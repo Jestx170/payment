@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PayWise - Smart Payment Wallet</title>
+    <script src="paywise-app.js"></script>
+    <link rel="stylesheet" href="ppp.css">
+
+</head>
+<body>
+    <div class="app-container">
+        <!-- Landing Screen -->
+        <div class="screen active" id="landing">
+            <div class="hero">
+                <h1>PayWise</h1>
+                <p>Smart Payment Wallet for Thailand</p>
+            </div>
+            
+            <div class="content">
+                <div class="feature-grid">
+                    <div class="feature-card" onclick="navigateTo('wallet')">
+                        <div class="icon">💰</div>
+                        <h3>Wallet</h3>
+                        <p>Manage your balance</p>
+                    </div>
+                    
+                    <div class="feature-card" onclick="navigateTo('qr-scanner')">
+                        <div class="icon">📱</div>
+                        <h3>QR Pay</h3>
+                        <p>Scan & pay instantly</p>
+                    </div>
+                    
+                    <div class="feature-card" onclick="navigateTo('multi-currency')">
+                        <div class="icon">🌍</div>
+                        <h3>Multi-Currency</h3>
+                        <p>Global payments</p>
+                    </div>
+                    
+                    <div class="feature-card" onclick="navigateTo('ai-recommendations')">
+                        <div class="icon">🤖</div>
+                        <h3>AI Insights</h3>
+                        <p>Smart suggestions</p>
+                    </div>
+                </div>
+                
+                <button class="btn-primary" onclick="navigateTo('wallet')">Get Started</button>
+            </div>
+        </div>
+
+        <!-- Wallet Screen -->
+        <div class="screen" id="wallet">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('landing')">← Back</button>
+                    <h1>Wallet</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="balance-card">
+                    <div class="balance-amount" id="balance-amount">฿2,456.78</div>
+                    <div class="balance-label">Available Balance</div>
+                </div>
+                
+                <div class="action-buttons">
+                    <div class="action-btn" onclick="navigateTo('top-up')">
+                        <div class="icon">⬆️</div>
+                        <div class="label">Top Up</div>
+                    </div>
+                    
+                    <div class="action-btn" onclick="navigateTo('qr-scanner')">
+                        <div class="icon">📱</div>
+                        <div class="label">QR Pay</div>
+                    </div>
+                    
+                    <div class="action-btn" onclick="navigateTo('virtual-card')">
+                        <div class="icon">💳</div>
+                        <div class="label">Virtual Card</div>
+                    </div>
+                </div>
+                
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2 style="font-size: 20px;">Recent Transactions</h2>
+                    <a href="#" onclick="navigateTo('history')" style="color: #667eea; text-decoration: none; font-weight: 600;">View All</a>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon" style="background: #fee2e2; color: #dc2626;">-</div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">7-Eleven Sukhumvit</div>
+                        <div class="transaction-subtitle">Today, 14:23</div>
+                    </div>
+                    <div class="transaction-amount" style="color: #dc2626;">-฿67.50</div>
+                </div>
+                
+                <div class="transaction-item">
+                    <div class="transaction-icon" style="background: #dcfce7; color: #16a34a;">+</div>
+                    <div class="transaction-details">
+                        <div class="transaction-title">Top-up from Visa ****1234</div>
+                        <div class="transaction-subtitle">Yesterday, 09:15</div>
+                    </div>
+                    <div class="transaction-amount" style="color: #16a34a;">+฿1,000.00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top-up Screen -->
+        <div class="screen" id="top-up">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('wallet')">← Back</button>
+                    <h1>เติมเงินเข้ากระเป๋า</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Quick Amount Selection -->
+                <div style="margin-bottom: 25px;">
+                    <label class="form-label">เลือกจำนวนเงินที่ต้องการเติม</label>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 15px;">
+                        <button class="quick-amount" onclick="setAmount(100)">฿100</button>
+                        <button class="quick-amount" onclick="setAmount(500)">฿500</button>
+                        <button class="quick-amount" onclick="setAmount(1000)">฿1,000</button>
+                        <button class="quick-amount" onclick="setAmount(2000)">฿2,000</button>
+                        <button class="quick-amount" onclick="setAmount(5000)">฿5,000</button>
+                        <button class="quick-amount" onclick="setAmount(10000)">฿10,000</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">หรือระบุจำนวนเอง (บาท)</label>
+                    <input type="number" class="form-input" id="topup-amount" placeholder="0.00" oninput="updateFees()" value="500" min="50" max="50000">
+                    <div style="font-size: 12px; color: #64748b; margin-top: 5px;">ขั้นต่ำ ฿50 - สูงสุด ฿50,000 ต่อครั้ง</div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">เลือกวิธีการเติมเงิน</label>
+                    <select class="form-select" id="topup-method" onchange="updateFees()">
+                        <option value="card">บัตรเครดิต/เดบิต (Visa, Mastercard)</option>
+                        <option value="bank">โอนเงินผ่านธนาคาร</option>
+                        <option value="paypal">PayPal</option>
+                        <option value="promptpay">พร้อมเพย์ (PromptPay)</option>
+                        <option value="truemoney">TrueMoney Wallet</option>
+                    </select>
+                </div>
+                
+                <!-- Exchange Rate Display -->
+                <div style="background: #f0fdf4; border: 2px solid #bbf7d0; border-radius: 12px; padding: 15px; margin: 20px 0;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="font-weight: 600; color: #166534;">อัตราแลกเปลี่ยน</span>
+                        <span style="font-size: 12px; color: #16a34a;">อัปเดตล่าสุด: 15:42</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>USD → THB:</span>
+                        <span style="font-weight: 600;">35.75</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <span>EUR → THB:</span>
+                        <span style="font-weight: 600;">38.92</span>
+                    </div>
+                    <div style="font-size: 12px; color: #166534; margin-top: 8px;">
+                        ⭐ อัตราตลาดกลาง ไม่มีค่าธรรมเนียมซ่อนเร้น
+                    </div>
+                </div>
+                
+                <!-- Fee Breakdown -->
+                <div class="fee-breakdown" id="fee-breakdown">
+                    <div style="font-weight: 600; margin-bottom: 12px; color: #374151;">รายละเอียดค่าใช้จ่าย</div>
+                    <div class="fee-row">
+                        <span>จำนวนเงินที่เติม:</span>
+                        <span id="fee-amount">฿500.00</span>
+                    </div>
+                    <div class="fee-row">
+                        <span>ค่าธรรมเนียมการประมวลผล:</span>
+                        <span id="fee-processing">฿24.50</span>
+                    </div>
+                    <div class="fee-row" style="font-size: 12px; color: #64748b;">
+                        <span id="fee-detail">(2.9% + ฿10)</span>
+                        <span></span>
+                    </div>
+                    <div class="fee-row">
+                        <span>ยอดรวมที่จะถูกหัก:</span>
+                        <span id="fee-total" style="color: #dc2626; font-weight: 700;">฿524.50</span>
+                    </div>
+                </div>
+                
+                <!-- Payment Method Details -->
+                <div class="form-group" id="card-details">
+                    <label class="form-label">รายละเอียดบัตร</label>
+                    <input type="text" class="form-input" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCardNumber(this)">
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                        <div>
+                            <label class="form-label">วันหมดอายุ</label>
+                            <input type="text" class="form-input" id="card-expiry" placeholder="MM/YY" maxlength="5" oninput="formatExpiry(this)">
+                        </div>
+                        <div>
+                            <label class="form-label">CVV</label>
+                            <input type="text" class="form-input" id="card-cvv" placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 15px;">
+                        <label class="form-label">ชื่อบนบัตร</label>
+                        <input type="text" class="form-input" id="card-name" placeholder="JOHN SMITH" style="text-transform: uppercase;">
+                    </div>
+                </div>
+
+                <!-- Alternative Payment Methods -->
+                <div class="form-group" id="bank-details" style="display: none;">
+                    <div style="background: #fffbeb; border: 2px solid #fed7aa; border-radius: 12px; padding: 15px;">
+                        <h3 style="margin-bottom: 10px;">โอนเงินผ่านธนาคาร</h3>
+                        <p style="font-size: 14px; color: #92400e;">
+                            โอนเงินไปยังบัญชี:<br>
+                            <strong>ธนาคารกสิกรไทย</strong><br>
+                            เลขที่บัญชี: 123-4-56789-0<br>
+                            ชื่อบัญชี: PayWise Thailand Co., Ltd.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-group" id="promptpay-details" style="display: none;">
+                    <div style="text-align: center; background: #f0f9ff; border-radius: 12px; padding: 20px;">
+                        <div style="width: 150px; height: 150px; background: white; border: 2px solid #e2e8f0; border-radius: 12px; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center;">
+                            <div style="font-size: 48px;">📱</div>
+                        </div>
+                        <p style="font-weight: 600; margin-bottom: 5px;">สแกน QR Code</p>
+                        <p style="font-size: 14px; color: #64748b;">เพื่อโอนเงินผ่านพร้อมเพย์</p>
+                    </div>
+                </div>
+                
+                <!-- Security Notice -->
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 15px; margin: 20px 0; font-size: 14px;">
+                    <div style="display: flex; align-items: center; margin-bottom: 8px;">
+                        <span style="font-size: 16px; margin-right: 8px;">🔒</span>
+                        <strong>ความปลอดภัย</strong>
+                    </div>
+                    <ul style="margin-left: 20px; color: #64748b;">
+                        <li>การเข้ารหัสข้อมูล SSL 256-bit</li>
+                        <li>การยืนยันตัวตน 3D Secure</li>
+                        <li>ไม่เก็บข้อมูลบัตรในระบบ</li>
+                    </ul>
+                </div>
+                
+                <button class="btn-primary" id="topup-btn" onclick="processTopup()" disabled>
+                    ยืนยันการเติมเงิน ฿<span id="confirm-amount">524.50</span>
+                </button>
+                
+                <div style="margin-top: 20px; padding: 15px; background: #f0f9ff; border-radius: 12px; font-size: 14px; color: #0369a1;">
+                    <strong>💎 ราคาโปร่งใส:</strong> เราใช้อัตราแลกเปลี่ยนตลาดกลาง ไม่มีค่าธรรมเนียมซ่อนเร้น แสดงค่าใช้จ่ายทั้งหมดล่วงหน้า
+                </div>
+            </div>
+        </div>
+
+        <!-- Top-up Success -->
+        <div class="screen" id="topup-success">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('wallet')">← Wallet</button>
+                    <h1>Top-up Successful</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="success-icon">✓</div>
+                <h2 style="text-align: center; margin-bottom: 30px;">Payment Processed Successfully</h2>
+                
+                <div class="receipt">
+                    <div class="receipt-header">
+                        <h3>Top-up Receipt</h3>
+                        <p style="color: #64748b; margin-top: 5px;">Transaction ID: TXN-2024-001234</p>
+                    </div>
+                    
+                    <div class="receipt-row">
+                        <span>Amount Topped Up:</span>
+                        <span>฿500.00</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Processing Fee:</span>
+                        <span>฿24.50</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Total Charged:</span>
+                        <span>฿524.50</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Payment Method:</span>
+                        <span>Visa ****1234</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>3DS Result:</span>
+                        <span style="color: #16a34a;">Verified</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>PSP Transaction ID:</span>
+                        <span>PSP-789456123</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Date & Time:</span>
+                        <span>Aug 16, 2025 15:42:18</span>
+                    </div>
+                </div>
+                
+                <button class="btn-primary" onclick="navigateTo('wallet')">Back to Wallet</button>
+            </div>
+        </div>
+
+        <!-- QR Scanner -->
+        <div class="screen" id="qr-scanner">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('wallet')">← Back</button>
+                    <h1>Scan QR Code</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="qr-scanner">
+                    <div class="qr-overlay"></div>
+                    <div style="text-align: center;">
+                        <div style="font-size: 48px; margin-bottom: 10px;">📷</div>
+                        <p>Point camera at QR code to pay</p>
+                        <button class="btn-primary" style="margin-top: 20px; max-width: 200px;" onclick="simulateQRScan()">Simulate Scan</button>
+                    </div>
+                </div>
+                
+                <div style="background: #f0f9ff; border-radius: 12px; padding: 15px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 10px;">💡 How to Pay</h3>
+                    <ol style="margin-left: 20px; color: #0369a1;">
+                        <li>Point your camera at the merchant's QR code</li>
+                        <li>Confirm the payment amount</li>
+                        <li>Complete payment with your PIN or biometric</li>
+                        <li>Show the receipt to merchant</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Confirmation -->
+        <div class="screen" id="payment-confirm">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('qr-scanner')">← Back</button>
+                    <h1>Confirm Payment</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <div style="font-size: 48px; margin-bottom: 10px;">🏪</div>
+                    <h2>7-Eleven Sukhumvit</h2>
+                    <p style="color: #64748b;">Merchant ID: M789456123</p>
+                </div>
+                
+                <div class="fee-breakdown">
+                    <div class="fee-row">
+                        <span>Amount:</span>
+                        <span>฿127.50</span>
+                    </div>
+                    <div class="fee-row">
+                        <span>Exchange Rate:</span>
+                        <span>1:1 (THB)</span>
+                    </div>
+                    <div class="fee-row">
+                        <span>Transaction Fee:</span>
+                        <span>฿0.00</span>
+                    </div>
+                    <div class="fee-row">
+                        <span>Total to Pay:</span>
+                        <span>฿127.50</span>
+                    </div>
+                </div>
+                
+                <div style="background: #ecfccb; border-radius: 12px; padding: 15px; margin: 20px 0; color: #365314;">
+                    <p><strong>Payment Method:</strong> PayWise Wallet</p>
+                    <p><strong>Available Balance:</strong> ฿2,456.78</p>
+                </div>
+                
+                <button class="btn-primary" onclick="processPayment()">
+                    Pay ฿127.50 with PIN
+                </button>
+            </div>
+        </div>
+
+        <!-- Payment Success -->
+        <div class="screen" id="payment-success">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('wallet')">← Wallet</button>
+                    <h1>Payment Successful</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div class="success-icon">✓</div>
+                <h2 style="text-align: center; margin-bottom: 30px;">Payment Completed</h2>
+                
+                <div class="receipt">
+                    <div class="receipt-header">
+                        <h3>Payment Confirmation</h3>
+                        <p style="color: #64748b; margin-top: 5px;">Trace ID: PAY-2024-567890</p>
+                    </div>
+                    
+                    <div class="receipt-row">
+                        <span>Merchant:</span>
+                        <span>7-Eleven Sukhumvit</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Merchant ID:</span>
+                        <span>M789456123</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>PromptPay ID:</span>
+                        <span>0123456789</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Amount Paid:</span>
+                        <span>฿127.50</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Acquirer TID:</span>
+                        <span>ACQ-456789</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>RRN:</span>
+                        <span>123456789012</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>STAN:</span>
+                        <span>789012</span>
+                    </div>
+                    <div class="receipt-row">
+                        <span>Date & Time:</span>
+                        <span>Aug 16, 2025 15:45:32</span>
+                    </div>
+                </div>
+                
+                <div style="background: #fef3c7; border-radius: 12px; padding: 15px; margin: 20px 0; color: #92400e; font-size: 14px;">
+                    <strong>Note:</strong> This is a payment confirmation, not a tax invoice. Request tax invoice from merchant if needed.
+                </div>
+                
+                <button class="btn-primary" onclick="navigateTo('wallet')">Back to Wallet</button>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="screen" id="history">
+            <div class="header">
+                <div class="header-nav">
+                    <button class="back-btn" onclick="navigateTo('wallet')">← Back</button>
+                    <h1>Transaction History</h1>
+                </div>
+            </div>
+            
+            <div class="content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr
